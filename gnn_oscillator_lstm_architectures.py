@@ -73,17 +73,16 @@ class GNN(torch.nn.Module):
         
         x = self.Oscillator(x)
         
-        #x= x+x2    
-        #x = self.fuzzy(x)
+    
         x = x.unsqueeze(0)
         x, _ = self.lstm(x)
         x = x.squeeze(0)
         
         
         x = self.lin_self_1(x) + self.conv1(x, edge_index, edge_type)
-        x = self.bn1(x)  # Applying batch norm
+        x = self.bn1(x)  
         x = torch.relu(x)
         x = self.lin_self_2(x) + self.conv2(x, edge_index, edge_type)
-        x = self.bn2(x)  # Applying batch norm
+        x = self.bn2(x)  
         
         return self.output(x - 10)
